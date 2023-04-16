@@ -2,10 +2,10 @@ import cv2
 import os
 
 # 设置视频文件路径
-video_path = "C:/Users/14471/Desktop/N01155150/N01155150.mp4"
+video_path = "video_path"
 
 # 设置图像保存路径
-output_folder = "C:/Users/14471/Desktop/LDAR/img"
+output_folder = "output_folder"
 
 # 创建输出文件夹（如果不存在）
 if not os.path.exists(output_folder):
