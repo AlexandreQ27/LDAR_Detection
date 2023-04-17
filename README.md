@@ -27,7 +27,7 @@ The goals of this project are:
   git clone git@github.com:AlexandreQ27/LDAR_Detection.git
   ```
   
-  2.Install the YOLOv5
+  2.Install  YOLOv5
   
   ```bash
   git clone git@github.com:ultralytics/yolov5.git
