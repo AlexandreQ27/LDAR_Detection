@@ -30,7 +30,7 @@ The goals of this project are:
   2.Install the YOLOv5
   
   ```bash
-  git clone https://github.com/ultralytics/yolov5
+  git clone git@github.com:ultralytics/yolov5.git
   ```
   
   3.Install the required packages:
