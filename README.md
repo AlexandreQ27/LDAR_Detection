@@ -11,14 +11,17 @@ The goals of this project are:
 ### **YOLO**
 #### Prerequisites
 Python 3.6 or higher
+
 PyTorch 1.7.0 or higher
+
 OpenCV 4.2.0 or higher
+
 NumPy 1.18.0 or higher
 #### Installation
-1.Clone this repository:
+1.Clone this repository(use ssh):
 
 ```bash
-git clone https://github.com/yourusername/yourproject.git
+git clone git@github.com:AlexandreQ27/LDAR_Detection.git
 ```
 2.Install the required packages:
 
