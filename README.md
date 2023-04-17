@@ -15,7 +15,7 @@ PyTorch 1.7.0 or higher
 OpenCV 4.2.0 or higher
 NumPy 1.18.0 or higher
 #### Installation
--1.Clone this repository:
+1.Clone this repository:
 
 ```bash
 git clone https://github.com/yourusername/yourproject.git
