@@ -10,29 +10,29 @@ The goals of this project are:
 ## **How to work**
 ### **YOLO**
 #### Prerequisites
-Python 3.6 or higher
+  Python 3.6 or higher
 
-PyTorch 1.7.0 or higher
+  PyTorch 1.7.0 or higher
 
-OpenCV 4.2.0 or higher
+  OpenCV 4.2.0 or higher
 
-NumPy 1.18.0 or higher
+  NumPy 1.18.0 or higher
 #### Installation
-1.Clone this repository(use ssh):
+  1.Clone this repository(use ssh):
 
-```bash
-git clone git@github.com:AlexandreQ27/LDAR_Detection.git
-```
-2.Install the required packages:
+  ```bash
+  git clone git@github.com:AlexandreQ27/LDAR_Detection.git
+  ```
+  2.Install the required packages:
 
-```bash
-pip install -r requirements.txt
-```
-3.Download the YOLOv5 model weights from the official repository or from my project(yolov5s.pt)
+  ```bash
+  pip install -r requirements.txt
+  ```
+  3.Download the YOLOv5 model weights from the official repository or from my project(yolov5s.pt)
 
 #### Acknowledgments
--YOLOv5: https://github.com/ultralytics/yolov5
+  -YOLOv5: https://github.com/ultralytics/yolov5
 
--OpenCV: https://opencv.org/
+  -OpenCV: https://opencv.org/
 
--PyTorch: https://pytorch.org/
+  -PyTorch: https://pytorch.org/
