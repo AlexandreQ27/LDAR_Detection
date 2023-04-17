@@ -1,0 +1,17 @@
+*/_build/**
+__pycache__
+.pytest_cache
+.vscode
+.idea
+/cmake-build-debug/
+/out/
+~$*
+*~
+*.swp
+*.swo
+.ipynb_checkpoints
+img*
+*.pyc
+/venv/
+*.py[cod]
+*.DS_Store
