@@ -9,12 +9,12 @@ The goals of this project are:
 
 ## **How to work**
 ### **YOLO**
-## **Prerequisites
-*Python 3.6 or higher
-*PyTorch 1.7.0 or higher
-*OpenCV 4.2.0 or higher
-*NumPy 1.18.0 or higher
-## **Installation
+#### Prerequisites
+Python 3.6 or higher
+PyTorch 1.7.0 or higher
+OpenCV 4.2.0 or higher
+NumPy 1.18.0 or higher
+#### Installation
 -1.Clone this repository:
 
 ```bash
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ```
 3.Download the YOLOv5 model weights from the official repository or from my project(yolov5s.pt)
 
-## **Acknowledgments
+#### Acknowledgments
 -YOLOv5: https://github.com/ultralytics/yolov5
 -OpenCV: https://opencv.org/
 -PyTorch: https://pytorch.org/
