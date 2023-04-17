@@ -36,6 +36,7 @@ The goals of this project are:
   3.Install the required packages:
 
   ```bash
+  cd yolov5
   pip install -r requirements.txt
   ```
   
