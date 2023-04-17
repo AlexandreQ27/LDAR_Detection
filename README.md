@@ -8,8 +8,8 @@ The goals of this project are:
 -This project aims to perform object detection and distance measurement using YOLOv5 object detection model.
 
 ## **2.How to work**
-### **2.1YOLO**
-#### 2.1.1Prerequisites
+### **2.1 YOLO**
+#### 2.1.1  Prerequisites
 
   Python 3.6 or higher
 
@@ -19,7 +19,7 @@ The goals of this project are:
 
   NumPy 1.18.0 or higher
   
-#### 2.1.2Installation
+#### 2.1.2  Installation
 
   1.Clone this repository(use ssh):
 
@@ -33,7 +33,7 @@ The goals of this project are:
   ```
   3.Download the YOLOv5 model weights from the official repository or from my project(yolov5s.pt)
 
-#### 2.1.3Acknowledgments
+#### 2.1.3  Acknowledgments
 
   -YOLOv5: https://github.com/ultralytics/yolov5
 
