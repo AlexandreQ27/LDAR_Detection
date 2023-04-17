@@ -29,5 +29,7 @@ pip install -r requirements.txt
 
 #### Acknowledgments
 -YOLOv5: https://github.com/ultralytics/yolov5
+
 -OpenCV: https://opencv.org/
+
 -PyTorch: https://pytorch.org/
