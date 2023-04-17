@@ -26,12 +26,20 @@ The goals of this project are:
   ```bash
   git clone git@github.com:AlexandreQ27/LDAR_Detection.git
   ```
-  2.Install the required packages:
+  
+  2.Install the YOLOv5
+  
+  ```bash
+  git clone https://github.com/ultralytics/yolov5
+  ```
+  
+  3.Install the required packages:
 
   ```bash
   pip install -r requirements.txt
   ```
-  3.Download the YOLOv5 model weights from the official repository or from my project(yolov5s.pt)
+  
+  4.Download the YOLOv5 model weights from the official repository or from my project(yolov5s.pt)
 
 #### 2.1.3  Acknowledgments
 
