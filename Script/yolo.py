@@ -1,12 +1,27 @@
 import cv2
+import os
+import sys
+from pathlib import Path
+
 import torch
+FILE = Path(__file__).resolve()
+ROOT = FILE.parents[0]  # YOLOv5 root directory
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))  # add ROOT to PATH
+ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 from models.experimental import attempt_load
 from utils.general import non_max_suppression
 from utils.torch_utils import select_device
+from models.common import DetectMultiBackend
+from utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages, LoadScreenshots, LoadStreams
+from utils.general import (LOGGER, Profile, check_file, check_img_size, check_imshow, check_requirements, colorstr, cv2,
+                           increment_path, non_max_suppression, print_args, scale_boxes, strip_optimizer, xyxy2xywh)
+from utils.plots import Annotator, colors, save_one_box
+from utils.torch_utils import select_device, smart_inference_mode
+line_thickness=10
 
 # 定义类别标签
-class_names = ['pipe', 'probe']
-
+class_names = ['pipe', 'probe']*100
 # 加载模型
 weights = 'yolov5s.pt'
 device = select_device('')
@@ -28,7 +43,6 @@ def detect(image):
     # 模型推理
     with torch.no_grad():
         pred = model(img)[0]
-        print(pred)
         pred = non_max_suppression(pred, 0.25, 0.45)
     pipe_center = None
     probe_center = None
@@ -36,21 +50,30 @@ def detect(image):
     if pred is not None:
         # 处理检测结果
         for i, det in enumerate(pred):
+            annotator = Annotator(img0, line_width=line_thickness)
             if len(det):
                 det[:, :4] = det[:, :4].clamp(0, img0.shape[1])
                 for *xyxy, conf, cls in reversed(det):
+                    print(cls)
+                    
                     label = f'{class_names[int(cls)]} {conf:.2f}'
-                    xywh = torch.tensor(xyxy).view(1, 4)
-                    xywh[:, [0, 2]] /= img0.shape[1]
-                    xywh[:, [1, 3]] /= img0.shape[0]
-                    c1, c2 = (xywh[:, :2] + xywh[:, 2:]) / 2.0
+                    gn = torch.tensor(img0.shape)[[1, 0, 1, 0]] 
+                    xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()
+                    #xywh = torch.tensor(xyxy).view(1, 4)
+                    print(xywh)
                     if class_names[int(cls)] == 'pipe':
-                        pipe_center = (c1.item(), c2.item())
-                    else:
-                        probe_center = (c1.item(), c2.item())
+                        pipe_center = (xywh[0], xywh[1])
+                        bbox = [int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])]
+                        cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)  # 绘制方框
+                        cv2.putText(image, label, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # 绘制类别标签
+                    elif class_names[int(cls)] == 'probe':
+                        probe_center = (xywh[0],xywh[1])
+                        bbox = [int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])]
+                        cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)  # 绘制方框
+                        cv2.putText(image, label, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # 绘制类别标签
         # 计算距离
-        if probe_center is not None and pipe_center is not None:
-            distance = ((probe_center[0] - pipe_center[0])**2 + (probe_center[1] - pipe_center[1])**2)**0.5
+    if probe_center is not None and pipe_center is not None:
+        distance = ((probe_center[0] - pipe_center[0])**2 + (probe_center[1] - pipe_center[1])**2)**0.5
     return image, distance
 
 # 加载视频并进行检测
@@ -81,7 +104,7 @@ while cap.isOpened():
     out.write(result)
 
     # 显示结果
-    #cv2.imshow('result', result)
+    cv2.imshow('result', result)
 
     # 等待用户按下ESC键退出
     if cv2.waitKey(1) == 27:
