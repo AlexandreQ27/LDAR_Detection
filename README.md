@@ -8,7 +8,13 @@ The goals of this project are:
 -This project aims to perform object detection and distance measurement using YOLOv5 object detection model.
 
 ## **2.How to work**
+
+### Install Python & Conda
+
+Before you start, you will need [Python](https://wiki.python.org/moin/BeginnersGuide/Download) and [Conda](https://docs.anaconda.com/anaconda/install/) on your computer.
+
 ### **2.1 YOLO**
+
 #### 2.1.1  Prerequisites
 
   Python 3.6 or higher
