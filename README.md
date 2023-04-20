@@ -32,6 +32,7 @@ Before you start, you will need [Python](https://wiki.python.org/moin/BeginnersG
   ```bash
   https://github.com/AlexandreQ27/LDAR_Detection.git
   ```
+  
 > **Warning**
 >
 > You may see below errors that prevent you from connecting to the remote repository, or timeout errors when you do push operations, especially if you are using the HTTP protocol.
