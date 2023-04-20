@@ -52,7 +52,7 @@ Before you start, you will need [Python](https://wiki.python.org/moin/BeginnersG
   2.Install  YOLOv5
   
   ```bash
-  [git clone git@github.com:ultralytics/yolov5.git](https://github.com/ultralytics/yolov5.git)
+  git clone https://github.com/ultralytics/yolov5.git
   ```
   
   3.Install the required packages:
