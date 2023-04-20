@@ -32,6 +32,21 @@ Before you start, you will need [Python](https://wiki.python.org/moin/BeginnersG
   ```bash
   https://github.com/AlexandreQ27/LDAR_Detection.git
   ```
+> **Warning**
+>
+> You may see below errors that prevent you from connecting to the remote repository, or timeout errors when you do push operations, especially if you are using the HTTP protocol.
+>
+> ```bash
+> Permission denied (publickey).
+> fatal: Could not read from remote repository.
+> fatal: unable to access 'https://github.com/<UserName>/machine-learning.git/': Recv failure: Connection was reset.
+> fatal: unable to access 'https://github.com/<UserName>/machine-learning.git/': The requested URL returned error : 403.
+> ```
+>
+> Solution:
+>
+> 1. Use [SSH protocol](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) to access the repo.
+> 2. Try more times in case the push operation fails occasionally.
   
   2.Install  YOLOv5
   
