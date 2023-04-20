@@ -40,8 +40,8 @@ Before you start, you will need [Python](https://wiki.python.org/moin/BeginnersG
 > ```bash
 > Permission denied (publickey).
 > fatal: Could not read from remote repository.
-> fatal: unable to access 'https://github.com/<UserName>/machine-learning.git/': Recv failure: Connection was reset.
-> fatal: unable to access 'https://github.com/<UserName>/machine-learning.git/': The requested URL returned error : 403.
+> fatal: unable to access 'https://github.com/AlexandreQ27/LDAR_Detection.git': Recv failure: Connection was reset.
+> fatal: unable to access 'https://github.com/AlexandreQ27/LDAR_Detection.git': The requested URL returned error : 403.
 > ```
 >
 > Solution:
