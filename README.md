@@ -30,7 +30,7 @@ Before you start, you will need [Python](https://wiki.python.org/moin/BeginnersG
   1.Clone this repository(use ssh):
 
   ```bash
-  https://github.com/AlexandreQ27/LDAR_Detection.git
+ git clone https://github.com/AlexandreQ27/LDAR_Detection.git
   ```
   
 > **Warning**
