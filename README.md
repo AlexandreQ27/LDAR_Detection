@@ -27,7 +27,7 @@ Before you start, you will need [Python](https://wiki.python.org/moin/BeginnersG
   
 #### 2.1.2  Installation
 
-  1.Clone this repository(use ssh):
+  1.Clone this repository(use http/ssh):
 
   ```bash
  git clone https://github.com/AlexandreQ27/LDAR_Detection.git
