@@ -21,9 +21,9 @@ from utils.torch_utils import select_device, smart_inference_mode
 line_thickness=10
 
 # 定义类别标签
-class_names = ['pipe', 'probe']*100
+class_names = ['pipe11', 'pipe12','pipe13','pipe14','pipe15','pipe16','pipe121']
 # 加载模型
-weights = 'yolov5s.pt'
+weights = 'yolov5/runs/train/exp26/weights/best.pt'
 device = select_device('')
 model = attempt_load(weights)
 model.eval()
@@ -43,14 +43,13 @@ def detect(image):
     # 模型推理
     with torch.no_grad():
         pred = model(img)[0]
-        pred = non_max_suppression(pred, 0.25, 0.45)
+        pred = non_max_suppression(pred, 0.25, 0.55)
     pipe_center = None
     probe_center = None
     distance = None
     if pred is not None:
         # 处理检测结果
         for i, det in enumerate(pred):
-            annotator = Annotator(img0, line_width=line_thickness)
             if len(det):
                 det[:, :4] = det[:, :4].clamp(0, img0.shape[1])
                 for *xyxy, conf, cls in reversed(det):
@@ -61,23 +60,18 @@ def detect(image):
                     xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()
                     #xywh = torch.tensor(xyxy).view(1, 4)
                     print(xywh)
-                    if class_names[int(cls)] == 'pipe':
+                    if class_names[int(cls)] :
+                        # 计算距离
                         pipe_center = (xywh[0], xywh[1])
-                        bbox = [int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])]
-                        cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)  # 绘制方框
-                        cv2.putText(image, label, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # 绘制类别标签
-                    elif class_names[int(cls)] == 'probe':
-                        probe_center = (xywh[0],xywh[1])
-                        bbox = [int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])]
-                        cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)  # 绘制方框
-                        cv2.putText(image, label, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # 绘制类别标签
-        # 计算距离
-    if probe_center is not None and pipe_center is not None:
-        distance = ((probe_center[0] - pipe_center[0])**2 + (probe_center[1] - pipe_center[1])**2)**0.5
+                        distance = ((pipe_center[0]-0.5)**2 + (pipe_center[1]-0.5)**2)**0.5
+                        if  distance<0.2:
+                            bbox = [int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])]
+                            cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)  # 绘制方框
+                            cv2.putText(image, label, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # 绘制类别标签
     return image, distance
 
 # 加载视频并进行检测
-cap = cv2.VideoCapture('C:/Users/14471/Desktop/N01155150/N01155150.mp4')
+cap = cv2.VideoCapture('C:/Users/14471/Desktop/LDAR/N01155150.mp4')
 frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 print(frame_width)
 frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
