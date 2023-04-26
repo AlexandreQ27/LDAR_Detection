@@ -19,7 +19,7 @@ from utils.general import (LOGGER, Profile, check_file, check_img_size, check_im
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, smart_inference_mode
 line_thickness=10
-
+min_frames=2
 # 定义类别标签
 class_names = ['pipe11', 'pipe12','pipe13','pipe14','pipe15','pipe16','pipe121']
 # 加载模型
@@ -45,7 +45,6 @@ def detect(image):
         pred = model(img)[0]
         pred = non_max_suppression(pred, 0.5, 0.45)
     pipe_center = None
-    probe_center = None
     distance = None
     if pred is not None:
         # 处理检测结果
@@ -53,33 +52,41 @@ def detect(image):
             if len(det):
                 det[:, :4] = det[:, :4].clamp(0, img0.shape[1])
                 for *xyxy, conf, cls in reversed(det):
-                    print(cls)
+                    #print(cls)
                     
                     label = f'{class_names[int(cls)]} {conf:.2f}'
                     gn = torch.tensor(img0.shape)[[1, 0, 1, 0]] 
                     xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()
                     #xywh = torch.tensor(xyxy).view(1, 4)
-                    print(xywh)
+                    #print(xywh)
                     if class_names[int(cls)] :
-                        # 计算距离
-                        pipe_center = (xywh[0], xywh[1])
-                        distance = ((pipe_center[0]-0.5)**2 + (pipe_center[1]-0.5)**2)**0.5
-                        if  distance<0.2:
-                            bbox = [int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])]
-                            cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)  # 绘制方框
-                            cv2.putText(image, label, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # 绘制类别标签
+                        #object_count[class_names[int(cls)]] += 1
+                        object_frames[class_names[int(cls)]].append(1)
+                        object_frames[class_names[int(cls)]].pop(0)
+                        if sum(object_frames[class_names[int(cls)]]) >= 2*min_frames:
+                            # 计算距离
+                            pipe_center = (xywh[0], xywh[1])
+                            distance = ((pipe_center[0]-0.5)**2 + (pipe_center[1]-0.5)**2)**0.5
+                            if  distance<0.2:
+                                bbox = [int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])]
+                                cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)  # 绘制方框
+                                cv2.putText(image, label, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # 绘制类别标签
+                            
     return image, distance
 
 # 加载视频并进行检测
 cap = cv2.VideoCapture('C:/Users/14471/Desktop/LDAR/N01155150.mp4')
 frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-print(frame_width)
+#print(frame_width)
 frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-print(frame_height)
+#print(frame_height)
 # 创建输出视频文件
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter('output.mp4', fourcc, 25, (800, 480))
-
+# 连续帧数记录器
+object_frames = {class_name: [0] * 5 for class_name in class_names}
+# 定义字典用于跟踪每个物体出现的次数
+object_count = {class_name: 0 for class_name in class_names}
 # 遍历每一帧
 while cap.isOpened():
     ret, frame = cap.read()
