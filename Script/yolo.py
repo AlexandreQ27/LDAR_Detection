@@ -43,7 +43,7 @@ def detect(image):
     # 模型推理
     with torch.no_grad():
         pred = model(img)[0]
-        pred = non_max_suppression(pred, 0.25, 0.55)
+        pred = non_max_suppression(pred, 0.5, 0.45)
     pipe_center = None
     probe_center = None
     distance = None
