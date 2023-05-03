@@ -1,3 +1,5 @@
 */_build/**
 dataset/
 output.mp4
+.DS_Store
+.idea/
