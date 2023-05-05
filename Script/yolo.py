@@ -21,7 +21,7 @@ from utils.torch_utils import select_device, smart_inference_mode
 line_thickness=10
 min_frames=2
 # 定义类别标签
-class_names = ['pipe11', 'pipe12','pipe13','pipe14','pipe15','pipe16','pipe121']
+class_names = ['pipe11', 'pipe12','pipe13','pipe14','pipe15','pipe16','pipe121','pipe141','crevice11']
 # 加载模型
 weights = '/Users/daizhicheng/Documents/Projects/YoloProjects/LDAR_Detection/yolov5/best.pt'
 device = select_device('')
@@ -58,7 +58,7 @@ def detect(image):
                     xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()
                     #xywh = torch.tensor(xyxy).view(1, 4)
                     #print(xywh)
-                    for itor in range(6):
+                    for itor in range(len(class_names)):
                         if class_names[itor] == class_names[int(cls)]:
                             object_frames[class_names[int(itor)]].append(1)
                             object_frames[class_names[int(itor)]].pop(0)
@@ -75,7 +75,7 @@ def detect(image):
                             object_frames[class_names[int(itor)]].append(0)
                             object_frames[class_names[int(itor)]].pop(0)
     else:
-        for itor2 in range(6):
+        for itor2 in range(len(class_names)):
             object_frames[class_names[int(itor2)]].append(0)
             object_frames[class_names[int(itor2)]].pop(0)
     return image, distance
