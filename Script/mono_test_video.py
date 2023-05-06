@@ -13,7 +13,6 @@ import torch
 from torchvision import transforms, datasets
 from networks import ResnetEncoder, DepthDecoder
 import networks
-from layers import disp_to_depth
 from utils import download_model_if_doesnt_exist
 from evaluate_depth import STEREO_SCALE_FACTOR
 from layers import disp_to_depth
@@ -46,6 +45,7 @@ def process_frame(frame, encoder, depth_decoder, device, pred_metric_depth,feed_
     original_height, original_width, _ = frame.shape
     #feed_height, feed_width = depth_decoder.input_size
     # Load video frame and preprocess
+    input_image=np.array(frame)
     input_image = pil.fromarray(frame).convert('RGB')
     input_image = input_image.resize((feed_width, feed_height), pil.LANCZOS)
     input_image = transforms.ToTensor()(input_image).unsqueeze(0)
