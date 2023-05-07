@@ -22,6 +22,8 @@ names:
   4: pipe15
   5: pipe16
   6: pipe121
+  7: pipe141
+  8: crevice11
 
 # Download script/URL (optional)
 download: https://ultralytics.com/assets/coco128.zip
