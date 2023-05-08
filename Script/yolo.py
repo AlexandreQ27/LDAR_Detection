@@ -68,7 +68,7 @@ def detect(image):
                         if class_names[itor] == class_names[int(cls)]:
                             object_frames[class_names[int(itor)]].append(1)
                             object_frames[class_names[int(itor)]].pop(0)
-                            if sum(object_frames[class_names[int(cls)]]) >= 2 * min_frames:
+                            if sum(object_frames[class_names[int(cls)]]) >= min_frames:
                                 # 计算距离
                                 pipe_center = (xywh[0], xywh[1])
                                 distance = ((pipe_center[0] - 0.5) ** 2 + (pipe_center[1] - 0.5) ** 2) ** 0.5
