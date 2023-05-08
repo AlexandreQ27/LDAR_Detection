@@ -2,7 +2,7 @@ import cv2
 import os
 import sys
 from pathlib import Path
-
+import numpy as np 
 import torch
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -81,18 +81,20 @@ def detect(image):
     return image, distance
 
 # 加载视频并进行检测
-cap = cv2.VideoCapture('/Users/daizhicheng/Documents/Projects/YoloProjects/LDAR_Detection/data/N01155150/N01155150.mp4')
+cap = cv2.VideoCapture('E:/CollegeEra/Junior/JuniorSpring/LDAR_Detection/N01155150/N01155150.mp4')
 frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 #print(frame_width)
 frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 #print(frame_height)
+
 # 创建输出视频文件
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter('output.mp4', fourcc, 25, (800, 480))
-# 连续帧数记录器
-object_frames = {class_name: [0] * 5 for class_name in class_names}
-# 定义字典用于跟踪每个物体出现的次数
-object_count = {class_name: 0 for class_name in class_names}
+out_main = cv2.VideoWriter('output_main.mp4', fourcc, 25, (800, 480))
+#检测出内容的视频合集
+out_detect = cv2.VideoWriter('detected.mp4', fourcc, 25, (800, 480))
+#创建黑色帧 用于间隔 
+black_frame = np.zeros((480, 640, 3), dtype=np.uint8)
+
 # 遍历每一帧
 while cap.isOpened():
     ret, frame = cap.read()
@@ -102,16 +104,19 @@ while cap.isOpened():
     # 进行检测
     frame = cv2.resize(frame, (800, 480))
     result, distance = detect(frame)
+    
+    # 显示实时检测效果
+    cv2.imshow('result', result)
 
-    # 在图像上绘制结果
+    # 在图像上绘制检测框
     if distance is not None:
         cv2.putText(result, f'Distance: {distance:.2f}', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
+        out_detect.write(frame)
+        # for _ in range(100):  # 发现效果不佳 暂时注释了
+        #     out_detect.write(black_frame)
     else:
-        cv2.putText(result, 'Distance: N/A', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
-    out.write(result)
-
-    # 显示结果
-    cv2.imshow('result', result)
+        cv2.putText(result, 'N/A', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
+    out_main.write(result)
 
     # 等待用户按下ESC键退出
     if cv2.waitKey(1) == 27:
@@ -119,5 +124,6 @@ while cap.isOpened():
 
 # 释放资源
 cap.release()
-out.release()
+out_main.release()
+out_detect.release()
 cv2.destroyAllWindows()
