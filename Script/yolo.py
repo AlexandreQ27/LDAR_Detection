@@ -27,6 +27,12 @@ weights = '/Users/daizhicheng/Documents/Projects/YoloProjects/LDAR_Detection/yol
 device = select_device('')
 model = attempt_load(weights)
 model.eval()
+
+# 连续帧数记录器 辅助队列的角色 检测往队末append '1' 
+array_len = 10
+min_frames = 7  #threshold
+object_frames = {class_name: [0] * array_len for class_name in class_names}  
+
 # 定义检测函数
 def detect(image):
     # 图像预处理
