@@ -2,7 +2,7 @@ import cv2
 import os
 import sys
 from pathlib import Path
-
+import numpy as np
 import torch
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -38,6 +38,7 @@ def detect(image):
     img0 = image.copy()
     # 转换颜色通道顺序为RGB，通道数为3
     img = cv2.cvtColor(img0, cv2.COLOR_BGR2RGB)
+    input_image = img
     img = img.transpose(2, 0, 1)  # 将通道维度放到第一维
     img = torch.from_numpy(img).to(device)
     img = img.float()
@@ -45,8 +46,8 @@ def detect(image):
     if img.ndimension() == 3:
         img = img.unsqueeze(0)
 
-    cv2.imwrite('cache/frame_{}.png'.format(frame_cnt), img0)
-    os.system(r"C:\Users\lifel\.conda\envs\monotest\python.exe C:\Users\lifel\Documents\Projects\YoloProjects\monodepth2\test_simple.py --image_path C:\Users\lifel\Documents\Projects\yolov5\cache\frame_{}.png --model_name mono+stereo_no_pt_640x192".format(frame_cnt))
+    # cv2.imwrite('cache/frame_{}.png'.format(frame_cnt), img0)
+    # os.system(r"C:\Users\lifel\.conda\envs\monotest\python.exe C:\Users\lifel\Documents\Projects\YoloProjects\monodepth2\mono_test_image.py --image_path C:\Users\lifel\Documents\Projects\yolov5\cache\frame_{}.png --model_name mono+stereo_no_pt_640x192".format(frame_cnt))
 
     # 模型推理
     with torch.no_grad():
@@ -55,6 +56,11 @@ def detect(image):
     pipe_center = None
     distance = None
     if pred[0].shape[0] != 0:
+        # 保存检测帧的图片数组信息用于产生深度图
+        np.save('cache2/frame_{}.npy'.format(frame_cnt), input_image)
+        os.system(
+            r"C:\Users\lifel\.conda\envs\monotest\python.exe C:\Users\lifel\Documents\Projects\YoloProjects\monodepth2\mono_test_npy.py --image_path C:\Users\lifel\Documents\Projects\yolov5\cache2\frame_{}.npy --model_name mono+stereo_no_pt_640x192".format(frame_cnt))
+
         # 处理检测结果
         for i, det in enumerate(pred):
             if len(det):
