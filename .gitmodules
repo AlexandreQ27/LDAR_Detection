@@ -1,3 +1,6 @@
 [submodule "yolov5"]
 	path = yolov5
 	url = git@github.com:ultralytics/yolov5.git
+[submodule "monodepth2"]
+	path = monodepth2
+	url = git@github.com:nianticlabs/monodepth2.git
