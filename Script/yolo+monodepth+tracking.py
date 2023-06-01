@@ -95,8 +95,8 @@ def detect(image):
 
                                         # 绘制直线
                                         cv2.line(canvas, center1, center2, (0, 255, 0), 2)
-                                    #depth_box = depth_array[int(xyxy[1]):int(xyxy[3]), int(xyxy[0]):int(xyxy[2])]
-                                    #depth_mean = np.mean(depth_box)
+                                    depth_box = depth_array[int(xyxy[1]):int(xyxy[3]), int(xyxy[0]):int(xyxy[2])]
+                                    depth_mean = np.mean(depth_box)
                                     cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)  # 绘制方框
                                     cv2.putText(image, label, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                                                 (0, 255, 0), 2)  # 绘制类别标签
