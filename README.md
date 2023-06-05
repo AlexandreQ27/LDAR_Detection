@@ -6,6 +6,9 @@ The goals of this project are:
 -Our project is to detect whether the distance from the probe to the pipeline meets the criteria, utilizing machine learning
 
 -This project aims to perform object detection and distance measurement using YOLOv5 object detection model.
+## **2.Result**
+
+![result](https://github.com/AlexandreQ27/LDAR_Detection/blob/main/results/result.png)
 
 ## **2.How to work**
 
